@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- In the head we set up the viewport for media queries, title, and link to the css doc. -->
+
+<!-- Head contains viewport for media queries, title, and link to the css doc. -->
 
 <head>
     <meta charset="UTF-8" />
@@ -10,12 +11,9 @@
     <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 
-<!-- Body is where the main code will be stored. -->
+<!-- Main section of code -->
 
 <body>
-    <!-- Testing a button that says "Try it" on it which will invoke the function "myFunction" when it is clicked. -->
-    <!-- <button onclick="myFunction()">Try it</button> -->
-    <!-- I think this "wrapper" thing is the whole area where there is code. -->
     <div class="wrapper">
         <!-- Main title -->
         <header>
@@ -31,9 +29,9 @@
                 <textarea readonly id="password" placeholder="Your Secure Password"
                     aria-label="Generated Password"></textarea>
             </div>
-            <!-- The footer here is where the generate password button is. By having it have the id of #generate, the querySelector can pin point it and use it as an argument in the invocation of the generateBtn variable. -->
+            <!-- Generate password button-- By having it have the id of #generate, the querySelector can pin point it and use it as an argument in the invocation of the generateBtn variable. -->
             <div class="card-footer">
-                <button onclick="writePassword()" id="generate" class="btn">Generate Password</button>
+                <button id="generate" class="btn">Generate Password</button>
             </div>
         </div>
     </div>

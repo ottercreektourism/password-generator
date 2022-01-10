@@ -1,88 +1,84 @@
-// defining "generateBtn" as a variable.
-// query.Selector is a method of "document".
-// This makes the "generateBtn" variable equal to #generate, so that it can use it in the function when it is called.
+// Pulls the #generate id into the JS and allows it to be accessed by using the "generateBtn" variable.
 var generateBtn = document.querySelector("#generate");
-var uppercaseChoices = ['ABCDEFGHIJKLMNOPQRSTUVWXYZ'];
-var lowercaseChoices = ['abcdefghijklmnopqrstuvwxyz'];
-var numberChoices = ['1234567890'];
-var specialCharacterChoices = ['!"#$%&()*+,-./:;<=>?@[]^_`{|}~'];
-var developerTesterArray = ['qwertyuiopasdfghjklzxcvbnm'];
 
+// Creating arrays with all of the choices that could be added depending on the user's input.
+var uppercaseChoices = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var uppercaseArray = uppercaseChoices.split('');
 
-function askpasswordLength(){
-    var desiredLength = prompt("How many characters would you like your password to be?");
+var lowercaseChoices = 'abcdefghijklmnopqrstuvwxyz';
+var lowercaseArray = lowercaseChoices.split('');
+
+var numberChoices = '1234567890';
+var numberArray = numberChoices.split('');
+
+var specialCharacterChoices = '!"#$%&()*+,-./:;<=>?@[]^_`{|}~';
+var specialCharacterArray = specialCharacterChoices.split('');
+
+// Empty array that each desired set of characters will concat to.
+var userChoiceArray = []
+
+// Invokes the function writePassword and tells it to ask how many characters the user would like.
+// Contains all of the confirm windows for the each of the password preferences.
+function generatePassword() {
+    // Resets the array to empty for each iteration of the code.
+    userChoiceArray = []
+    var desiredLength = prompt("How many characters would you like your password to be? \n Choose between 8 and 128.");
     if (desiredLength != null && desiredLength > 7 && desiredLength < 129) {
-        document.getElementById("password").innerHTML = ("Your password will be " + desiredLength + "characters long.")
+    
+        // defines the specialCharacterConfirm variable as whatever the user's preference on special characters is.
+        specialCharacterConfirm = confirm("Click OK to include special characters.");
+        if (specialCharacterConfirm == true) {
+            userChoiceArray = userChoiceArray.concat(specialCharacterArray)
+        }
+
+        // defines the numericConfirm variable as whatever the user's preference on numeric characters is.
+        numericConfirm = confirm("Click OK to include numeric characters.");
+        if (numericConfirm == true) {
+            userChoiceArray = userChoiceArray.concat(numberArray)
+        }
+
+        // defines the lowercaseConfirm variable as whatever the user's preference on lowercase characters is.
+        lowercaseConfirm = confirm("Click OK to include lowercase letters.")
+        if (lowercaseConfirm == true) {
+            userChoiceArray = userChoiceArray.concat(lowercaseArray)
+        }
+
+        // defines the uppercaseConfirm variable as whatever the user's preference on uppercase characters is.
+        uppercaseConfirm = confirm("Click OK to include uppercase letters.");
+        if (uppercaseConfirm == true) {
+            userChoiceArray = userChoiceArray.concat(uppercaseArray)
+        }
+        else if (specialCharacterConfirm != true && numericConfirm != true && lowercaseConfirm != true && uppercaseConfirm != true){
+            alert("Please select one or more options.");
+            generatePassword.desiredLength();
+        }
+        return createPasswordArray(desiredLength);
+    } 
+    // If the user types < 7, > 128 or nothing for desiredLength, this message will appear.
+    else {
+        alert("Please choose a valid password length.");
+        // document.getElementById("#password").innerHTML = ("");
+    }}
+
+// Created function to pass the user's desired password length to the randomizer. 
+// Randomly generates a number and assigns it to an item in the userChoiceArray.
+// Adds a random array item to the password for each iteration, up to the user's desired password length.
+function createPasswordArray(desiredLength) {
+    var password = ""
+    for (var i=0; i<desiredLength; i++) {
+        var randomNumber = Math.floor(Math.random() * userChoiceArray.length);
+        // console.log(randomNumber);
+        password = password + userChoiceArray[randomNumber];
+        // console.log(password);
     }
-    else{
-        document.getElementById("password").innerHTML = ("Please choose a valid password length.")
-    }
+    return password;
 }
-// Write password to the #password input
-// This invokes the askUppercase function and gives it something to do
-// Will occur once the event listener detects a click of the button.
-function askSpecialCharacters() {
-    let specialCharacterConfirm = "Do you want your password to include special characters?";
-    if (confirm(specialCharacterConfirm) == true) {
-      specialCharacterConfirm = "Great! Your password will include special characters.";
-      var rand = Math.floor(Math.random() * developerTesterArray.length);
-      var password = developerTesterArray[rand];
-
-    } else {
-        specialCharacterConfirm = "Ok. Your password will not include special characters.";
-    }
-    document.getElementById("password").innerHTML = specialCharacterConfirm;
-}
-
-function askNumeric() {
-    let numericConfirm = "Do you want your password to include numeric characters?";
-    if (confirm(numericConfirm) == true) {
-        numericConfirm = "Great! Your password will include numeric characters.";
-      var rand = Math.floor(Math.random() * developerTesterArray.length);
-      var password = developerTesterArray[rand];
-
-    } else {
-        numericConfirm = "Ok. Your password will not include numeric characters.";
-    }
-    document.getElementById("password").innerHTML = numericConfirm;
-}
-
-function askLowercase() {
-    let lowercaseConfirm = "Do you want your password to include lowercase letters?";
-    if (confirm(lowercaseConfirm) == true) {
-        lowercaseConfirm = "Great! Your password will include lowercase letters.";
-      var rand = Math.floor(Math.random() * developerTesterArray.length);
-      var password = developerTesterArray[rand];
-
-    } else {
-        lowercaseConfirm = "Ok. Your password will not include lowercase letters.";
-    }
-    document.getElementById("password").innerHTML = lowercaseConfirm;
-}
-
-function askUppercase() {
-    let uppercaseConfirm = "Do you want your password to include uppercase letters?";
-    if (confirm(uppercaseConfirm) == true) {
-      uppercaseConfirm = "Great! Your password will include uppercase letters.";
-      var rand = Math.floor(Math.random() * developerTesterArray.length);
-      var password = developerTesterArray[rand];
-
-    } else {
-      uppercaseConfirm = "Ok. Your password will not include uppercase letters.";
-    }
-    document.getElementById("password").innerHTML = uppercaseConfirm;
+// Created a function to write the password so the user can see it.
+function writePassword(){
+    var password = generatePassword();
+    var passwordText = document.querySelector("#password");
+    passwordText.value = password;
 }
 
-    // Inside the function, we have to define variable "password" and set it equal 
-    // to generatePassword function so that the password that is named will be whatever 
-    // the password was set to.
-  var password = generatePassword();
-    //This grabs the id = password from the html so that it can be used within the passwordText variable.
-  var passwordText = document.querySelector("#password");
-
-//   This makes sure that the password text value that is being created is always passed to the password.
-  passwordText.value = password;
-
-// Add event listener to generate button
-// event listener will detect when the button is being clicked, and at that point, will invoke the writePassword function
-generateBtn.addEventListener("click", askUppercase);
+// Invokes the writePassword function when the Generate Password button is clicked.
+generateBtn.addEventListener("click", writePassword);
