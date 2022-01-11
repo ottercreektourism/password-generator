@@ -57,7 +57,7 @@ function generatePassword() {
     // If the user types < 7, > 128 or nothing for desiredLength, this message will appear.
     else {
         alert("Please choose a valid password length.");
-        // document.getElementById("#password").innerHTML = ("");
+        return ""
     }}
 
 // Created function to pass the user's desired password length to the randomizer. 
@@ -67,9 +67,7 @@ function createPasswordArray(desiredLength) {
     var password = ""
     for (var i=0; i<desiredLength; i++) {
         var randomNumber = Math.floor(Math.random() * userChoiceArray.length);
-        // console.log(randomNumber);
         password = password + userChoiceArray[randomNumber];
-        // console.log(password);
     }
     return password;
 }
